@@ -172,13 +172,13 @@ void Game::updateBallCollisions()
     if(m_ball->getPosition().left < 0 || m_ball->getPosition().left + m_ball->getPosition().width > this->m_videoMode.width && m_ball->getBounceTimer() < 0)
     {
         m_ball->bounceOnSides();
-        m_ball->setBounceTimer(0.05f);
+        m_ball->setBounceTimer(BALL_TIMER_DEFAULT);
     }
 
     if(m_ball->getPosition().top < 0 || m_ball->getPosition().top + m_ball->getPosition().height > this->m_videoMode.height && m_ball->getBounceTimer() < 0)
     {
         m_ball->bounceOnTop();
-        m_ball->setBounceTimer(0.05f);
+        m_ball->setBounceTimer(BALL_TIMER_DEFAULT);
     }
 
     if((m_ball->getPosition().intersects(m_p1Paddle->getPosition())) && m_ball->getBounceTimer() < 0)
@@ -200,7 +200,7 @@ void Game::updateBallCollisions()
 
         }
 
-        m_ball->setBounceTimer(0.05f);
+        m_ball->setBounceTimer(BALL_TIMER_DEFAULT);
     }
 
     /*if(m_ball->getPosition().top + m_ball->getPosition().height > this->m_videoMode.height)

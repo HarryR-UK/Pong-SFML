@@ -12,7 +12,7 @@
 
 #include "Ball.h"
 #include "Player1Paddle.h"
-
+#include "Global.h"
 
 class Game
 {
