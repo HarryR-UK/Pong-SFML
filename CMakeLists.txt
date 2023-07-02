@@ -3,7 +3,7 @@ project(PongGit)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
-set(SOURCE_FILES src/main.cpp)
+set(SOURCE_FILES src/main.cpp src/Game.cpp include/Game.h src/Ball.cpp include/Ball.h src/Time.cpp include/Time.h src/Player1Paddle.cpp include/Player1Paddle.h)
 add_executable(PongGit ${SOURCE_FILES})
 include_directories(/usr/local/include)
 
