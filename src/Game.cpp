@@ -142,28 +142,12 @@ void Game::getInput()
     //Paddle movements
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
     {
-        if(this->m_p1Paddle->getPosition().top > 0 && m_p1Paddle->getPaddleTimer() < 0)
-        {
-            m_p1Paddle->idleMove();
-            m_p1Paddle->setPaddleTimer(0.10f);
-        }
-        else{
-
-            this->m_p1Paddle->moveUp();
-        }
+        this->m_p1Paddle->moveUp();
 
     }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && m_p1Paddle->getPosition().top< this->m_videoMode.height - m_p1Paddle->getPosition().height && m_p1Paddle->getPaddleTimer() < 0)
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
     {
-        if(m_p1Paddle->getPosition().top< this->m_videoMode.height - m_p1Paddle->getPosition().height && m_p1Paddle->getPaddleTimer() < 0)
-        {
-            m_p1Paddle->idleMove();
-            m_p1Paddle->setPaddleTimer(0.10f);
-
-        }
-        else {
-            this->m_p1Paddle->moveDown(); 
-        }
+        this->m_p1Paddle->moveDown();
     }
     else
     {
@@ -188,13 +172,13 @@ void Game::updateBallCollisions()
     if(m_ball->getPosition().left < 0 || m_ball->getPosition().left + m_ball->getPosition().width > this->m_videoMode.width && m_ball->getBounceTimer() < 0)
     {
         m_ball->bounceOnSides();
-        m_ball->setBounceTimer(0.10f);
+        m_ball->setBounceTimer(0.05f);
     }
 
     if(m_ball->getPosition().top < 0 || m_ball->getPosition().top + m_ball->getPosition().height > this->m_videoMode.height && m_ball->getBounceTimer() < 0)
     {
         m_ball->bounceOnTop();
-        m_ball->setBounceTimer(0.10f);
+        m_ball->setBounceTimer(0.05f);
     }
 
     if((m_ball->getPosition().intersects(m_p1Paddle->getPosition())) && m_ball->getBounceTimer() < 0)
@@ -216,7 +200,7 @@ void Game::updateBallCollisions()
 
         }
 
-        m_ball->setBounceTimer(0.10f);
+        m_ball->setBounceTimer(0.05f);
     }
 
     /*if(m_ball->getPosition().top + m_ball->getPosition().height > this->m_videoMode.height)

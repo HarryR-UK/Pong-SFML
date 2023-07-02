@@ -7,6 +7,8 @@
 #include <SFML/Window.hpp>
 #include<SFML/Graphics.hpp>
 
+#include "../include/Global.h"
+
 class Ball
 {
     private:

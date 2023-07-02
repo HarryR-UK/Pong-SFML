@@ -6,7 +6,7 @@ void Ball::initBallProperties()
     m_ballSpeed = 7.f;
     m_directionY = 1.f;
     m_directionX = 1.f;
-    m_bounceTimer = 0.10f;
+    m_bounceTimer = BALL_TIMER_DEFAULT;
 
 }
 
