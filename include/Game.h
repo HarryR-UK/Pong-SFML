@@ -10,9 +10,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
-#include "Ball.h"
-#include "Player1Paddle.h"
-#include "Global.h"
 
 class Game
 {
@@ -27,10 +24,6 @@ class Game
         int m_screenWidth;
         int m_screenHeight;
 
-        sf::Clock m_paddleClock;
-        sf::Clock m_ballClock;
-
-        
         // Functions
         void initVariables();
         void initWindow();
@@ -43,13 +36,11 @@ class Game
         sf::Text m_player2Text;
 
         // Objects
-        Ball* m_ball;
-        Player1Paddle* m_p1Paddle;
         
 
         
     public:
-        Game(Ball& ball, Player1Paddle& p1Paddle);
+        Game();
         virtual ~Game();
 
         void startGLoop();
@@ -61,11 +52,7 @@ class Game
 
 
 
-        // Ball stuff (rock face)
-        void updateBallCollisions();
 
-        // Paddle shit
-        void udpatePaddleCollisions();
         
 
         void getInput();
@@ -73,8 +60,6 @@ class Game
         //Rendering
         void render();
         void renderText(sf::RenderTarget& target);
-        void renderBall(sf::RenderTarget& target);
-        void renderPaddle(sf::RenderTarget& target);
 
         // Accessors
         const bool isRunning() const;

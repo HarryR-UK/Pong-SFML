@@ -1,11 +1,8 @@
 
 #include "../include/Game.h"
-#include "../include/Time.h"
 
-Game::Game(Ball& ball, Player1Paddle& p1Paddle)
+Game::Game()
 {
-    this->m_ball = &ball;
-    this->m_p1Paddle = &p1Paddle;
 
     // Initiations
     initVariables();
@@ -91,8 +88,6 @@ void Game::update()
     this->pollEvents();
 
     this->updateText();
-    this->m_ball->update(Time::deltaTime);
-    this->m_p1Paddle->update(Time::deltaTime);
 }
 
 void Game::updateText()
@@ -107,15 +102,6 @@ void Game::renderText(sf::RenderTarget& target)
     target.draw(this->m_player2Text);
 }
 
-void Game::renderBall(sf::RenderTarget &target)
-{
-    target.draw(this->m_ball->getShape());
-}
-
-void Game::renderPaddle(sf::RenderTarget &target)
-{
-    target.draw(this->m_p1Paddle->getShape());
-}
 
 
 void Game::render()
@@ -124,8 +110,6 @@ void Game::render()
 
     // Draw objects
     this->renderText(*this->m_window);
-    this->renderBall(*this->m_window);
-    this->renderPaddle(*this->m_window);
     
     m_window->display();
 }
@@ -133,77 +117,14 @@ void Game::render()
 void Game::getInput()
 {
 
-    m_p1Paddle->setPaddleTimer(m_p1Paddle->getPaddleTimer() - Time::deltaTime);
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
     {
         this->m_window->close();
     }
 
-    //Paddle movements
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) )
-    {
-        this->m_p1Paddle->moveUp();
-
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        this->m_p1Paddle->moveDown();
-    }
-    else
-    {
-        this->m_p1Paddle->idleMove();
-    }
-            
 
     
-}
-
-
-void Game::updateBallCollisions()
-{
-
-    m_ball->setBounceTimer(m_ball->getBounceTimer() - Time::deltaTime);
-
-    // collision on either left or right side
-    if(m_ball->getPosition().left < 0 || m_ball->getPosition().left + m_ball->getPosition().width > this->m_videoMode.width && m_ball->getBounceTimer() < 0)
-    {
-        m_ball->bounceOnSides();
-        m_ball->setBounceTimer(BALL_TIMER_DEFAULT);
-    }
-
-    if(m_ball->getPosition().top < 0 || m_ball->getPosition().top + m_ball->getPosition().height > this->m_videoMode.height && m_ball->getBounceTimer() < 0)
-    {
-        m_ball->bounceOnTop();
-        m_ball->setBounceTimer(BALL_TIMER_DEFAULT);
-    }
-
-    if((m_ball->getPosition().intersects(m_p1Paddle->getPosition())) && m_ball->getBounceTimer() < 0)
-    {
-        int choice = rand() % 2;
-        switch(choice)
-        {
-            case 0:
-                m_ball->bounceOnTop();
-                m_ball->bounceOnSides();
-
-                break;
-            case 1:
-                m_ball->bounceOnSides();
-
-                break;
-            default:
-                break;
-
-        }
-
-        m_ball->setBounceTimer(BALL_TIMER_DEFAULT);
-    }
-
-    /*if(m_ball->getPosition().top + m_ball->getPosition().height > this->m_videoMode.height)
-      {
-      m_ball->missBottom();
-      }*/
 }
 
 
@@ -215,12 +136,10 @@ void Game::startGLoop(){
         //this->startTBall();
         //this->startTInput();
 
-        Time::initDeltaTime();
 
 
         // thread in future???? if ur fucking smart enough, save me
         this->update();
-        updateBallCollisions();
         getInput();
 
         this->render();
