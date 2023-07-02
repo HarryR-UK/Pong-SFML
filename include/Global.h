@@ -1,5 +1,6 @@
 #ifndef GLOBAL_H
 
-#define BALL_TIMER_DEFAULT 0.3f
+#define BALL_TIMER_DEFAULT 0.1f
+#define TIME_DELTATIME_MULTIPLIER 60
 
 #endif /*!GLOBAL_H*/

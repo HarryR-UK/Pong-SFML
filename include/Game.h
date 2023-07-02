@@ -26,19 +26,16 @@ class Game
 
         int m_screenWidth;
         int m_screenHeight;
+
+        sf::Clock m_paddleClock;
+        sf::Clock m_ballClock;
+
         
         // Functions
         void initVariables();
         void initWindow();
         void initFont();
         void initText();
-
-        // threading
-        void startTBall(); 
-        std::thread m_ballThread;
-
-        void startTInput();
-        std::thread m_inputThread;
 
         // GUI
         sf::Font m_gameFont;

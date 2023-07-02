@@ -37,6 +37,7 @@ void Game::initWindow()
     m_videoMode.height = m_screenHeight * 0.7;
 
     m_window = new sf::RenderWindow(m_videoMode, "PONG", sf::Style::Close | sf::Style::None);
+    m_window->setFramerateLimit(240);
 }
 
 void Game::initFont()
@@ -158,10 +159,6 @@ void Game::getInput()
     
 }
 
-void Game::startTInput()
-{
-    this->m_inputThread = std::thread (&Game::getInput, this);
-}
 
 void Game::updateBallCollisions()
 {
@@ -209,28 +206,25 @@ void Game::updateBallCollisions()
       }*/
 }
 
-void Game::startTBall()
-{
-    this->m_ballThread = std::thread(&Game::updateBallCollisions, this);
-}
 
 void Game::startGLoop(){
 
     while(this->isRunning())
     { 
         // starts the main threads
-        this->startTBall();
-        this->startTInput();
+        //this->startTBall();
+        //this->startTInput();
 
         Time::initDeltaTime();
 
 
         // thread in future???? if ur fucking smart enough, save me
         this->update();
-
+        updateBallCollisions();
+        getInput();
 
         this->render();
-        m_ballThread.join();
-        m_inputThread.join();
+        //m_ballThread.join();
+        //m_inputThread.join();
     }
 }
