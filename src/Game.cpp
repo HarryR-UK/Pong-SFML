@@ -1,8 +1,10 @@
 
 #include "../include/Game.h"
 
-Game::Game()
+Game::Game(Ball* ball) 
 {
+    
+    this->m_ball = ball;
 
     // Initiations
     initVariables();
@@ -88,6 +90,8 @@ void Game::update()
     this->pollEvents();
 
     this->updateText();
+    m_ball->update(Time::deltaTime);
+    m_ball->checkBallCollisions(m_videoMode);
 }
 
 void Game::updateText()
@@ -110,6 +114,7 @@ void Game::render()
 
     // Draw objects
     this->renderText(*this->m_window);
+    m_ball->render(*this->m_window);
     
     m_window->display();
 }
@@ -136,7 +141,7 @@ void Game::startGLoop(){
         //this->startTBall();
         //this->startTInput();
 
-
+        Time::initDeltaTime();
 
         // thread in future???? if ur fucking smart enough, save me
         this->update();

@@ -10,6 +10,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
 
+#include "../include/Ball.h"
+#include "../include/Time.h"
 
 class Game
 {
@@ -36,11 +38,12 @@ class Game
         sf::Text m_player2Text;
 
         // Objects
+        Ball* m_ball;
         
 
         
     public:
-        Game();
+        Game(Ball* ball);
         virtual ~Game();
 
         void startGLoop();
