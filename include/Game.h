@@ -1,6 +1,7 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include "Paddle.h"
 #pragma once
 
 #include<iostream>
@@ -26,11 +27,15 @@ class Game
         int m_screenWidth;
         int m_screenHeight;
 
+        int m_paddleHitRandomChoice;
+
         // Functions
         void initVariables();
         void initWindow();
         void initFont();
         void initText();
+
+        void updateBallCollisions();
 
         // GUI
         sf::Font m_gameFont;
@@ -39,11 +44,12 @@ class Game
 
         // Objects
         Ball* m_ball;
+        Paddle* m_paddle;
         
 
         
     public:
-        Game(Ball* ball);
+        Game(Ball* ball, Paddle* paddle);
         virtual ~Game();
 
         void startGLoop();

@@ -6,6 +6,8 @@
 #include <SFML/Window.hpp>
 #include<SFML/Graphics.hpp>
 
+#include "Paddle.h"
+
 class Ball
 {
     private:
@@ -18,12 +20,14 @@ class Ball
         
         float m_bounceTimer;
 
+        Paddle* m_paddle;
+
         // Functions
         void initBallProperties(); // wtf?
                                    
         
     public:
-        Ball(float startX, float startY);
+        Ball(float startX, float startY, Paddle* paddle);
 
         sf::FloatRect getPosition();
         sf::RectangleShape getShape();

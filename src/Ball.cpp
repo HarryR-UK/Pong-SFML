@@ -9,7 +9,7 @@ void Ball::initBallProperties()
 
 }
 
-Ball::Ball(float startX, float startY)
+Ball::Ball(float startX, float startY, Paddle* paddle)
 {
     this->initBallProperties();
 
@@ -73,6 +73,8 @@ void Ball::update(float deltaTime)
 
 void Ball::checkBallCollisions(sf::VideoMode videoMode)
 {
+
+    // Screen wall collision checking
     if(this->m_ballShape.getPosition().x < 0.f || this->m_ballShape.getPosition().x + m_ballShape.getGlobalBounds().width > videoMode.width)
     {
         bounceOnSides();
