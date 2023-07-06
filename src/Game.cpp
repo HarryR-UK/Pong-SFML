@@ -1,11 +1,12 @@
 
 #include "../include/Game.h"
 
-Game::Game(Ball* ball, Paddle* paddle) 
+Game::Game(Ball* ball, Paddle* paddle, BotPaddle* botPaddle) 
 {
     
     this->m_ball = ball;
     this->m_paddle = paddle;
+    this->m_botPaddle = botPaddle;
 
     // Initiations
     initVariables();
@@ -37,7 +38,6 @@ void Game::initWindow()
     m_videoMode.height = m_screenHeight * 0.7;
 
     m_window = new sf::RenderWindow(m_videoMode, "PONG", sf::Style::Close | sf::Style::None);
-    m_window->setFramerateLimit(240);
 }
 
 void Game::initFont()
@@ -93,6 +93,8 @@ void Game::update()
     this->updateText();
     m_ball->update(Time::deltaTime);
     m_paddle->update(Time::deltaTime);
+    m_botPaddle->update(Time::deltaTime, m_ball->getShape().getPosition());
+
     m_ball->checkBallCollisions(m_videoMode);
     this->updateBallCollisions();
 }
@@ -140,6 +142,7 @@ void Game::render()
     this->renderText(*this->m_window);
     m_ball->render(*this->m_window);
     m_paddle->render(*this->m_window);
+    m_botPaddle->render(*this->m_window);
     
     m_window->display();
 }

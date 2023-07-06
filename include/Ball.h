@@ -27,7 +27,7 @@ class Ball
                                    
         
     public:
-        Ball(float startX, float startY, Paddle* paddle);
+        Ball(float startX, float startY);
 
         sf::FloatRect getPosition();
         sf::RectangleShape getShape();

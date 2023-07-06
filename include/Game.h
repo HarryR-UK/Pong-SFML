@@ -1,6 +1,7 @@
 
 #ifndef GAME_H
 #define GAME_H
+#include "BotPaddle.h"
 #include "Paddle.h"
 #pragma once
 
@@ -45,11 +46,12 @@ class Game
         // Objects
         Ball* m_ball;
         Paddle* m_paddle;
+        BotPaddle* m_botPaddle;
         
 
         
     public:
-        Game(Ball* ball, Paddle* paddle);
+        Game(Ball* ball, Paddle* paddle, BotPaddle* botPaddle);
         virtual ~Game();
 
         void startGLoop();

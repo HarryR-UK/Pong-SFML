@@ -9,7 +9,7 @@ void Ball::initBallProperties()
 
 }
 
-Ball::Ball(float startX, float startY, Paddle* paddle)
+Ball::Ball(float startX, float startY) 
 {
     this->initBallProperties();
 
