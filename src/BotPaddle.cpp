@@ -18,10 +18,12 @@ BotPaddle::BotPaddle(float startX, float startY)
     m_paddleShape.setOrigin(m_paddleShape.getSize().x / 2, m_paddleShape.getSize().y /2);
     m_paddleShape.setPosition(m_position);
 
+    /* DEBUGGING ORIGIN POINT
     m_originPoint.setSize(sf::Vector2f(10,10));
     m_originPoint.setFillColor(sf::Color::Red);
     m_originPoint.setPosition(m_paddleShape.getOrigin());
     m_originPoint.setOrigin(m_originPoint.getSize().x /2, m_originPoint.getSize().y /2);
+    */
 
 }
 
