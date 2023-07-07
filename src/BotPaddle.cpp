@@ -25,6 +25,18 @@ BotPaddle::BotPaddle(float startX, float startY)
 
 }
 
+void BotPaddle::checkPaddleCollisions(sf::VideoMode videoMode)
+{ 
+    if(this->nextPos.top < 0)
+    {
+        this->m_position.y = (0 + m_paddleShape.getGlobalBounds().height / 2);
+    }
+    if(this->nextPos.top + m_paddleShape.getSize().y > videoMode.height)
+    {
+        this->m_position.y =  videoMode.height - m_paddleShape.getGlobalBounds().height /2 ;
+    }
+}
+
 sf::FloatRect BotPaddle::getPosition()
 {
     return m_paddleShape.getGlobalBounds();
@@ -37,6 +49,9 @@ sf::RectangleShape BotPaddle::getShape()
 
 void BotPaddle::update(float deltaTime, float ballYVelocity, sf::Vector2f ballPosition)
 {
+    nextPos =m_paddleShape.getGlobalBounds();
+    nextPos.top += m_paddleDirectionY * m_paddleMoveSpeed * deltaTime;
+
     (m_paddleShape.getPosition().y < ballPosition.y) ? m_position.y += m_paddleMoveSpeed * deltaTime 
         : m_position.y -= m_paddleMoveSpeed * deltaTime;
 

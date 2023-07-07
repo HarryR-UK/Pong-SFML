@@ -98,6 +98,7 @@ void Game::update()
 
     m_ball->checkBallCollisions(m_videoMode);
     m_paddle->checkPaddleCollisions(m_videoMode);
+    m_botPaddle->checkPaddleCollisions(m_videoMode);
     // this->updateBallCollisions();
 }
 

@@ -23,6 +23,9 @@ class BotPaddle{
         
         void update(float deltaTime, float ballYVelocity, sf::Vector2f ballPosition);
         void render(sf::RenderTarget& target);
+        void checkPaddleCollisions(sf::VideoMode videoMode);
+
+        sf::FloatRect nextPos;
 
 };
 
