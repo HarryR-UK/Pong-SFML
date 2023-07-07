@@ -29,6 +29,7 @@ void BotPaddle::checkPaddleCollisions(sf::VideoMode videoMode)
 { 
     if(this->nextPos.top < 0)
     {
+        // as out origin is not at half the players height, we need to take this into account with the positioning
         this->m_position.y = (0 + m_paddleShape.getGlobalBounds().height / 2);
     }
     if(this->nextPos.top + m_paddleShape.getSize().y > videoMode.height)
