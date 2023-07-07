@@ -2,7 +2,7 @@
 
 void BotPaddle::initPaddleProperties()
 {
-    m_paddleMoveSpeed = 7;
+    m_paddleMoveSpeed = 6;
     m_paddleDirectionY = 0.f;
 }
 
@@ -37,9 +37,10 @@ sf::RectangleShape BotPaddle::getShape()
 
 void BotPaddle::update(float deltaTime, float ballYVelocity, sf::Vector2f ballPosition)
 {
-    m_position.y = ballPosition.y;
-    m_paddleShape.setPosition(m_position);
+    (m_paddleShape.getPosition().y < ballPosition.y) ? m_position.y += m_paddleMoveSpeed * deltaTime 
+        : m_position.y -= m_paddleMoveSpeed * deltaTime;
 
+    m_paddleShape.setPosition(m_position);
     m_originPoint.setPosition(m_paddleShape.getPosition());
 
 }

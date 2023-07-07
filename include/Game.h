@@ -47,6 +47,10 @@ class Game
         Ball* m_ball;
         Paddle* m_paddle;
         BotPaddle* m_botPaddle;
+
+        //Threads
+        std::thread m_inputThread;
+        std::thread m_ballCollisionsThread;
         
 
         

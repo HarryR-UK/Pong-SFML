@@ -1,5 +1,6 @@
 
 #include "../include/Game.h"
+#include <thread>
 
 Game::Game(Ball* ball, Paddle* paddle, BotPaddle* botPaddle) 
 {
@@ -96,7 +97,7 @@ void Game::update()
     m_botPaddle->update(Time::deltaTime,m_ball->getYVelocity(), m_ball->getShapePos());
 
     m_ball->checkBallCollisions(m_videoMode);
-    this->updateBallCollisions();
+    // this->updateBallCollisions();
 }
 
 void Game::updateText()
@@ -107,21 +108,25 @@ void Game::updateText()
 
 void Game::updateBallCollisions()
 {
-    if(m_ball->getPosition().intersects(m_paddle->getPosition()) || m_ball->getPosition().intersects(m_botPaddle->getPosition()))
+    while(isRunning())
     {
-        switch(m_paddleHitRandomChoice)
+        if(m_ball->getPosition().intersects(m_paddle->getPosition()) || m_ball->getPosition().intersects(m_botPaddle->getPosition()))
         {
-            case 0:
-                m_ball->bounceOnSides();
-                break;
-            case 1:
-                m_ball->bounceOnTop();
-                m_ball->bounceOnSides();
-                break;
-            default:
-                std::cout << "ERROR GAME::UPDATEBALLCOLLISIONS paddle hit random choice not working" << '\n';
+            switch(m_paddleHitRandomChoice)
+            {
+                case 0:
+                    m_ball->bounceOnSides();
+                    break;
+                case 1:
+                    m_ball->bounceOnTop();
+                    m_ball->bounceOnSides();
+                    break;
+                default:
+                    std::cout << "ERROR GAME::UPDATEBALLCOLLISIONS paddle hit random choice not working" << '\n';
 
+            }
         }
+
     }
 }
 
@@ -149,23 +154,26 @@ void Game::render()
 
 void Game::getInput()
 {
+    while(isRunning())
+    {
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        {
+            this->m_window->close();
+        }
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            m_paddle->moveUp();
+        }
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            m_paddle->moveDown();
+        }
+        else{
+            m_paddle->idleMove();
+        }
 
 
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-    {
-        this->m_window->close();
-    }
-
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        m_paddle->moveUp();
-    }
-    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        m_paddle->moveDown();
-    }
-    else{
-        m_paddle->idleMove();
     }
 
 
@@ -175,22 +183,21 @@ void Game::getInput()
 
 void Game::startGLoop(){
 
+    m_inputThread = std::thread(&Game::getInput, this);
+    m_ballCollisionsThread = std::thread(&Game::updateBallCollisions, this);
     while(this->isRunning())
     { 
 
         m_paddleHitRandomChoice = rand() % 2;
-        // starts the main threads
-        //this->startTBall();
-        //this->startTInput();
 
         Time::initDeltaTime();
 
         // thread in future???? if ur fucking smart enough, save me
         this->update();
-        getInput();
+
 
         this->render();
-        //m_ballThread.join();
-        //m_inputThread.join();
     }
+    m_inputThread.join();
+    m_ballCollisionsThread.join();
 }
