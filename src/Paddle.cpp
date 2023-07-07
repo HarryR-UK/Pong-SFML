@@ -45,10 +45,25 @@ sf::RectangleShape Paddle::getShape()
     return m_paddleShape;
 }
 
+void Paddle::checkPaddleCollisions(sf::VideoMode videoMode)
+{
+    if(this->nextPos.top < 0)
+    {
+        this->m_position.y = (0);
+    }
+    if(this->nextPos.top + m_paddleShape.getSize().y > videoMode.height)
+    {
+        this->m_position.y =  videoMode.height - m_paddleShape.getGlobalBounds().height;
+    }
+}
 
 void Paddle::update(float deltaTime)
 {
+    nextPos = m_paddleShape.getGlobalBounds();
+    nextPos.top += m_paddleDirectionY * m_paddleMoveSpeed * deltaTime;
+
     m_position.y += m_paddleDirectionY * m_paddleMoveSpeed * deltaTime;
+
 
     m_paddleShape.setPosition(m_position);
 }

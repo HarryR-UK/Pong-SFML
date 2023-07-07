@@ -97,6 +97,7 @@ void Game::update()
     m_botPaddle->update(Time::deltaTime,m_ball->getYVelocity(), m_ball->getShapePos());
 
     m_ball->checkBallCollisions(m_videoMode);
+    m_paddle->checkPaddleCollisions(m_videoMode);
     // this->updateBallCollisions();
 }
 

@@ -6,7 +6,7 @@
 #include <iostream>
 #include<SFML/Graphics.hpp>
 #include<SFML/System.hpp>
-
+#include "../include/Time.h"
 
 class Paddle
 {
@@ -16,6 +16,7 @@ class Paddle
 
         float m_paddleMoveSpeed;
         float m_paddleDirectionY;
+        sf::Vector2f m_paddleVelocity;
 
 
         //Functions
@@ -37,7 +38,9 @@ class Paddle
         void update(float deltaTime);
         void render(sf::RenderTarget& target);
 
+        sf::FloatRect nextPos;
 
+        void checkPaddleCollisions(sf::VideoMode videoMode);
 
 };
 
