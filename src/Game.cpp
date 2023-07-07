@@ -27,10 +27,15 @@ Game::~Game()
 
 void Game::initVariables()
 {
+    // assigning pointers
+    m_pPlayer1Text = &m_player1Text;
+    m_pPlayer2Text = &m_player2Text;
+
     m_window = nullptr;
 
     m_screenHeight = sf::VideoMode::getDesktopMode().height;
     m_screenWidth = sf::VideoMode::getDesktopMode().width;
+
 }
 
 void Game::initWindow()
@@ -55,16 +60,20 @@ void Game::initText()
     m_player1Text.setFont(m_gameFont);
     m_player1Text.setCharacterSize(50);
     m_player1Text.setFillColor(sf::Color::White);
-    m_player1Text.setString("NONE");
+    m_player1Text.setString("0");
     m_player1Text.setPosition((0.25 * m_videoMode.width) - 0.5, 0);
+    
+    m_ball->setPlayer1Pointer(m_pPlayer1Text);
+
     
     // Player 2
     m_player2Text.setFont(m_gameFont);
     m_player2Text.setCharacterSize(50);
     m_player2Text.setFillColor(sf::Color::White);
-    m_player2Text.setString("NONE");
+    m_player2Text.setString("0");
     m_player2Text.setPosition((0.75 * m_videoMode.width) + 0.5, 0);
 
+    m_ball->setPlayer2Pointer(m_pPlayer2Text);
 }
 
 const bool Game::isRunning() const
@@ -91,7 +100,6 @@ void Game::update()
 {
     this->pollEvents();
 
-    this->updateText();
     m_ball->update(Time::deltaTime);
     m_paddle->update(Time::deltaTime);
     m_botPaddle->update(Time::deltaTime,m_ball->getYVelocity(), m_ball->getShapePos());
@@ -102,11 +110,6 @@ void Game::update()
     // this->updateBallCollisions();
 }
 
-void Game::updateText()
-{
-    m_player1Text.setString("0");
-    m_player2Text.setString("0");
-}
 
 void Game::updateBallCollisions()
 {
@@ -163,11 +166,11 @@ void Game::getInput()
             this->m_window->close();
         }
 
-        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
             m_paddle->moveUp();
         }
-        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
         {
             m_paddle->moveDown();
         }

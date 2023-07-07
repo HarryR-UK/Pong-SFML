@@ -40,8 +40,12 @@ class Game
 
         // GUI
         sf::Font m_gameFont;
+
         sf::Text m_player1Text;
+        sf::Text* m_pPlayer1Text;
+
         sf::Text m_player2Text;
+        sf::Text* m_pPlayer2Text;
 
         // Objects
         Ball* m_ball;
@@ -63,12 +67,6 @@ class Game
         // Updating
         void update();
         void pollEvents();
-        void updateText();
-
-
-
-
-        
 
         void getInput();
 

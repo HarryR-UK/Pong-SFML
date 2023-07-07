@@ -2,7 +2,7 @@
 
 void BotPaddle::initPaddleProperties()
 {
-    m_paddleMoveSpeed = 6;
+    m_paddleMoveSpeed = 5.5f;
     m_paddleDirectionY = 0.f;
 }
 

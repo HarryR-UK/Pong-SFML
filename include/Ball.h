@@ -3,6 +3,7 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
 #include <SFML/Window.hpp>
 #include<SFML/Graphics.hpp>
 
@@ -12,7 +13,7 @@ class Ball
 {
     private:
         sf::Vector2f m_position;
-        sf::RectangleShape m_ballShape; // sus????
+        sf::RectangleShape m_ballShape; 
 
         float m_ballSpeed;
         float m_directionX;
@@ -20,7 +21,11 @@ class Ball
         
         float m_bounceTimer;
 
+        sf::Vector2f startPos;
+
         Paddle* m_paddle;
+        sf::Text* p_player1Text;
+        sf::Text* p_player2Text;
 
         // Functions
         void initBallProperties(); // wtf?
@@ -34,12 +39,20 @@ class Ball
 
         float getYVelocity();
         float getBounceTimer();
-        void setBounceTimer(float time);
         float getBallSpeed();
+
+        void setPlayer1Pointer(sf::Text *player1Text);
+        void setPlayer2Pointer(sf::Text *player2Text);
+        void setBounceTimer(float time);
 
         void bounceOnSides();
         void bounceOnTop();
         void missBottom();
+        void scoreOnSides();
+
+        void pointToPlayer();
+        void pointToBot();
+
 
         void hitBall();
         void update(float deltaTime);

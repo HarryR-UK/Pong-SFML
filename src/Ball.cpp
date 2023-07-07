@@ -1,4 +1,5 @@
 #include "../include/Ball.h"
+#include <sstream>
 
 void Ball::initBallProperties()
 {
@@ -12,6 +13,9 @@ void Ball::initBallProperties()
 Ball::Ball(float startX, float startY) 
 {
     this->initBallProperties();
+
+    startPos.x = startX;
+    startPos.y = startY;
 
     m_position.x = startX;
     m_position.y = startY;
@@ -56,6 +60,46 @@ void Ball::bounceOnSides()
     m_directionX = -m_directionX;
 }
 
+void Ball::scoreOnSides()
+{
+    m_directionY = 1.f;
+    m_directionX = 1.f;
+
+    m_position.x = startPos.x;
+    m_position.y = startPos.y;
+}
+
+void Ball::pointToPlayer()
+{
+    //change Text
+    std::string currentPoints = (p_player1Text->getString());
+    int newPoints = std::stoi(currentPoints) + 1;
+    std::stringstream ss;
+    ss << newPoints;
+    p_player1Text->setString(ss.str());
+
+    
+    
+
+    //reset ball postiion
+    this->scoreOnSides();
+}
+
+
+void Ball::pointToBot()
+{
+    //change Text
+    std::string currentPoints = p_player2Text->getString();
+    int newPoints = std::stoi(currentPoints) + 1;
+    std::stringstream ss;
+    ss << newPoints;
+    p_player2Text->setString(ss.str());
+    std::cout << newPoints << '\n';
+
+    //reset ball postiion
+    this->scoreOnSides();
+}
+
 void Ball::bounceOnTop()
 {
     m_directionY = -m_directionY;
@@ -82,6 +126,16 @@ void Ball::update(float deltaTime)
     m_ballShape.setPosition(m_position);
 }
 
+void Ball::setPlayer1Pointer(sf::Text *player1Text)
+{
+    this->p_player1Text = player1Text;
+}
+
+void Ball::setPlayer2Pointer(sf::Text *player2Text)
+{
+    this->p_player2Text = player2Text;
+}
+
 void Ball::checkBallCollisions(sf::VideoMode videoMode)
 {
 
@@ -97,10 +151,16 @@ void Ball::checkBallCollisions(sf::VideoMode videoMode)
     }
     */
 
-    if(nextPos.left < 0 || nextPos.left + m_ballShape.getSize().x > videoMode.width)
+    if(nextPos.left < 0)
     {
-        bounceOnSides();
+        this->pointToBot();
     }
+
+    if(nextPos.left + m_ballShape.getSize().x > videoMode.width)
+    {
+        this->pointToPlayer();
+    }
+
 
 
     if(nextPos.top < 0 || nextPos.top + m_ballShape.getSize().y > videoMode.height)
