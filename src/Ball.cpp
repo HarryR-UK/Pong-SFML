@@ -31,9 +31,9 @@ sf::RectangleShape Ball::getShape()
 }
 
 
-float Ball::getXVelocity()
+float Ball::getYVelocity()
 {
-    return m_directionX;
+    return m_directionY;
 }
 
 float Ball::getBounceTimer()
@@ -87,6 +87,11 @@ void Ball::checkBallCollisions(sf::VideoMode videoMode)
 
 
 
+}
+
+sf::Vector2f Ball::getShapePos()
+{
+    return m_position;
 }
 
 void Ball::render(sf::RenderTarget &target)

@@ -93,7 +93,7 @@ void Game::update()
     this->updateText();
     m_ball->update(Time::deltaTime);
     m_paddle->update(Time::deltaTime);
-    m_botPaddle->update(Time::deltaTime, m_ball->getShape().getPosition());
+    m_botPaddle->update(Time::deltaTime,m_ball->getYVelocity(), m_ball->getShapePos());
 
     m_ball->checkBallCollisions(m_videoMode);
     this->updateBallCollisions();
@@ -107,7 +107,7 @@ void Game::updateText()
 
 void Game::updateBallCollisions()
 {
-    if(m_ball->getPosition().intersects(m_paddle->getPosition()))
+    if(m_ball->getPosition().intersects(m_paddle->getPosition()) || m_ball->getPosition().intersects(m_botPaddle->getPosition()))
     {
         switch(m_paddleHitRandomChoice)
         {

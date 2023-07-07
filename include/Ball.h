@@ -32,7 +32,7 @@ class Ball
         sf::FloatRect getPosition();
         sf::RectangleShape getShape();
 
-        float getXVelocity();
+        float getYVelocity();
         float getBounceTimer();
         void setBounceTimer(float time);
 
@@ -45,6 +45,7 @@ class Ball
         void checkBallCollisions(sf::VideoMode videoMode);
         void render(sf::RenderTarget &target);
 
+        sf::Vector2f getShapePos();
 
 
 };

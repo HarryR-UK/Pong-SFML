@@ -8,10 +8,10 @@ class BotPaddle{
     private:
         sf::Vector2f m_position;
         sf::RectangleShape m_paddleShape;
+        sf::RectangleShape m_originPoint;
 
         float m_paddleMoveSpeed;
         float m_paddleDirectionY;
-        float m_paddleMoveDelay;
 
         void initPaddleProperties();
 
@@ -21,7 +21,7 @@ class BotPaddle{
         sf::FloatRect getPosition();
         sf::RectangleShape getShape();
         
-        void update(float deltaTime, sf::Vector2f ballPos);
+        void update(float deltaTime, float ballYVelocity, sf::Vector2f ballPosition);
         void render(sf::RenderTarget& target);
 
 };
