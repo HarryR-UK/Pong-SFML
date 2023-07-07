@@ -20,6 +20,11 @@ Ball::Ball(float startX, float startY)
     m_ballShape.setPosition(m_position);
 }
 
+float Ball::getBallSpeed()
+{
+    return m_ballSpeed;
+}
+
 sf::FloatRect Ball::getPosition()
 {
     return m_ballShape.getGlobalBounds();
@@ -64,6 +69,12 @@ void Ball::missBottom()
 
 void Ball::update(float deltaTime)
 {
+    
+    // TODO: COME BACK TO
+    nextPos = m_ballShape.getGlobalBounds();
+    nextPos.left += m_directionX;
+    nextPos.top += m_directionY;
+
     m_position.x += m_directionX * m_ballSpeed * deltaTime;
     m_position.y += m_directionY * m_ballSpeed * deltaTime;
     
@@ -74,15 +85,31 @@ void Ball::update(float deltaTime)
 void Ball::checkBallCollisions(sf::VideoMode videoMode)
 {
 
+    /*
     // Screen wall collision checking
     if(this->m_ballShape.getPosition().x < 0.f || this->m_ballShape.getPosition().x + m_ballShape.getGlobalBounds().width > videoMode.width)
     {
-        bounceOnSides();
+        //bounceOnSides();
     }
     if(this->m_ballShape.getPosition().y < 0.f || m_ballShape.getPosition().y + m_ballShape.getGlobalBounds().height > videoMode.height)
     {
+        //bounceOnTop();
+    }
+    */
+
+    if(nextPos.left < 0 || nextPos.left + m_ballShape.getSize().x > videoMode.width)
+    {
+        bounceOnSides();
+    }
+
+
+    if(nextPos.top < 0 || nextPos.top + m_ballShape.getSize().y > videoMode.height)
+    {
         bounceOnTop();
     }
+
+
+    
 
 
 

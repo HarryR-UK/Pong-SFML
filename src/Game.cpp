@@ -110,7 +110,7 @@ void Game::updateBallCollisions()
 {
     while(isRunning())
     {
-        if(m_ball->getPosition().intersects(m_paddle->getPosition()) || m_ball->getPosition().intersects(m_botPaddle->getPosition()))
+        if(m_ball->nextPos.intersects(m_paddle->getPosition()) || m_ball->nextPos.intersects(m_botPaddle->getPosition()))
         {
             switch(m_paddleHitRandomChoice)
             {

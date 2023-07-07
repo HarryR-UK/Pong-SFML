@@ -35,6 +35,7 @@ class Ball
         float getYVelocity();
         float getBounceTimer();
         void setBounceTimer(float time);
+        float getBallSpeed();
 
         void bounceOnSides();
         void bounceOnTop();
@@ -46,6 +47,9 @@ class Ball
         void render(sf::RenderTarget &target);
 
         sf::Vector2f getShapePos();
+        
+
+        sf::FloatRect nextPos;
 
 
 };
