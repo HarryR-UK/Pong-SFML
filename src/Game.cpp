@@ -107,7 +107,12 @@ void Game::update()
     m_ball->checkBallCollisions(m_videoMode);
     m_paddle->checkPaddleCollisions(m_videoMode);
     m_botPaddle->checkPaddleCollisions(m_videoMode);
-    // this->updateBallCollisions();
+
+
+    m_playerPoints = std::stoi((std::string) m_player1Text.getString());
+    m_botPoints = std::stoi((std::string) m_player2Text.getString());
+
+    
 }
 
 
@@ -151,7 +156,7 @@ void Game::render()
     // Draw objects
     this->renderText(*this->m_window);
     m_ball->render(*this->m_window);
-    m_paddle->render(*this->m_window);
+    //m_paddle->render(*this->m_window);
     m_botPaddle->render(*this->m_window);
     
     m_window->display();

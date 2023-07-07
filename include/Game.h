@@ -47,6 +47,10 @@ class Game
         sf::Text m_player2Text;
         sf::Text* m_pPlayer2Text;
 
+        int m_playerPoints;
+        int m_botPoints;
+        
+
         // Objects
         Ball* m_ball;
         Paddle* m_paddle;
@@ -73,6 +77,7 @@ class Game
         //Rendering
         void render();
         void renderText(sf::RenderTarget& target);
+        
 
         // Accessors
         const bool isRunning() const;
