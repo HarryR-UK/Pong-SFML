@@ -27,6 +27,8 @@ class Ball
         sf::Text* p_player1Text;
         sf::Text* p_player2Text;
 
+        float m_scoreTimer;
+
         // Functions
         void initBallProperties(); // wtf?
                                    

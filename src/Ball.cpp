@@ -6,7 +6,7 @@ void Ball::initBallProperties()
     m_ballSpeed = 7.f;
     m_directionY = 1.f;
     m_directionX = 1.f;
-    m_bounceTimer = 0.10f;
+    m_scoreTimer = 0.5f;
 
 }
 
@@ -67,6 +67,8 @@ void Ball::scoreOnSides()
 
     m_position.x = startPos.x;
     m_position.y = startPos.y;
+
+    m_scoreTimer = 0.5f;
 }
 
 void Ball::pointToPlayer()
@@ -114,7 +116,6 @@ void Ball::missBottom()
 void Ball::update(float deltaTime)
 {
     
-    // TODO: COME BACK TO
     nextPos = m_ballShape.getGlobalBounds();
     nextPos.left += m_directionX;
     nextPos.top += m_directionY;
@@ -124,6 +125,9 @@ void Ball::update(float deltaTime)
     
     //m_ballShape.move(m_directionX * m_ballSpeed * deltaTime, m_directionY * m_ballSpeed * deltaTime);
     m_ballShape.setPosition(m_position);
+
+    m_scoreTimer -= Time::deltaTime;
+    std::cout << m_scoreTimer << '\n';
 }
 
 void Ball::setPlayer1Pointer(sf::Text *player1Text)
@@ -151,12 +155,12 @@ void Ball::checkBallCollisions(sf::VideoMode videoMode)
     }
     */
 
-    if(nextPos.left < 0)
+    if(nextPos.left < 0 && m_scoreTimer < 0)
     {
         this->pointToBot();
     }
 
-    if(nextPos.left + m_ballShape.getSize().x > videoMode.width)
+    if(nextPos.left + m_ballShape.getSize().x > videoMode.width && m_scoreTimer < 0)
     {
         this->pointToPlayer();
     }
