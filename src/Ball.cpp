@@ -117,7 +117,6 @@ void Ball::pointToBot()
     std::stringstream ss;
     ss << newPoints;
     p_player2Text->setString(ss.str());
-    std::cout << newPoints << '\n';
 
     //reset ball postiion
     this->scoreOnSides();
@@ -148,7 +147,6 @@ void Ball::update(float deltaTime)
     m_ballShape.setPosition(m_position);
 
     m_scoreTimer -= Time::deltaTime;
-    std::cout << m_scoreTimer << '\n';
 }
 
 void Ball::setPlayer1Pointer(sf::Text *player1Text)
