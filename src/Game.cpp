@@ -27,6 +27,10 @@ Game::~Game()
 
 void Game::initVariables()
 {
+    m_gameOver = false;
+    m_playerWins = false;
+    m_botWins = false;
+
     // assigning pointers
     m_pPlayer1Text = &m_player1Text;
     m_pPlayer2Text = &m_player2Text;
@@ -35,6 +39,7 @@ void Game::initVariables()
 
     m_screenHeight = sf::VideoMode::getDesktopMode().height;
     m_screenWidth = sf::VideoMode::getDesktopMode().width;
+
 
 }
 
@@ -74,6 +79,20 @@ void Game::initText()
     m_player2Text.setPosition((0.75 * m_videoMode.width) + 0.5, 0);
 
     m_ball->setPlayer2Pointer(m_pPlayer2Text);
+
+
+    // Game over screen
+    
+
+    m_winnertext.setFont(m_gameFont);
+    m_winnertext.setCharacterSize(75);
+    m_winnertext.setFillColor(sf::Color::White);
+    
+    m_winnerTextRect = m_winnertext.getGlobalBounds();
+    m_winnertext.setPosition(sf::Vector2f((m_videoMode.width / 2) - m_winnertext.getCharacterSize() * 2.5, (m_videoMode.height / 2) - m_winnertext.getCharacterSize()));
+    
+
+    
 }
 
 const bool Game::isRunning() const
@@ -100,17 +119,32 @@ void Game::update()
 {
     this->pollEvents();
 
-    m_ball->update(Time::deltaTime);
-    m_paddle->update(Time::deltaTime);
-    m_botPaddle->update(Time::deltaTime,m_ball->getYVelocity(), m_ball->getShapePos());
+    if(!m_gameOver)
+    {
+        m_ball->update(Time::deltaTime);
+        m_paddle->update(Time::deltaTime);
+        m_botPaddle->update(Time::deltaTime,m_ball->getYVelocity(), m_ball->getShapePos());
 
-    m_ball->checkBallCollisions(m_videoMode);
-    m_paddle->checkPaddleCollisions(m_videoMode);
-    m_botPaddle->checkPaddleCollisions(m_videoMode);
+        m_ball->checkBallCollisions(m_videoMode);
+        m_paddle->checkPaddleCollisions(m_videoMode);
+        m_botPaddle->checkPaddleCollisions(m_videoMode);
 
 
-    m_playerPoints = std::stoi((std::string) m_player1Text.getString());
-    m_botPoints = std::stoi((std::string) m_player2Text.getString());
+        m_playerPoints = std::stoi((std::string) m_player2Text.getString());
+        m_botPoints = std::stoi((std::string) m_player1Text.getString());
+
+    }
+    else {
+        
+
+        if(m_playerWins)
+        {
+            m_winnertext.setString("YOU WIN!");
+        }
+        else if (m_botWins){
+            m_winnertext.setString("YOU LOSE!");
+        }
+    }
 
     
 }
@@ -154,12 +188,33 @@ void Game::render()
     m_window->clear();
 
     // Draw objects
-    this->renderText(*this->m_window);
-    m_ball->render(*this->m_window);
-    //m_paddle->render(*this->m_window);
-    m_botPaddle->render(*this->m_window);
+    if(!m_gameOver)
+    {
+        this->renderText(*this->m_window);
+        m_ball->render(*this->m_window);
+        m_paddle->render(*this->m_window);
+        m_botPaddle->render(*this->m_window);
+
+    }
+    else{
+        m_window->draw(m_winnertext);
+    }
     
     m_window->display();
+}
+
+void Game::checkGameOver()
+{
+    if(m_playerPoints >= 5)
+    {
+        m_playerWins = true;
+        m_gameOver = true;
+    }
+    if(m_botPoints >= 5)
+    {
+        m_botWins = true;
+        m_gameOver = true;
+    }
 }
 
 void Game::getInput()
@@ -197,16 +252,18 @@ void Game::startGLoop(){
     m_ballCollisionsThread = std::thread(&Game::updateBallCollisions, this);
     while(this->isRunning())
     { 
-
-        m_paddleHitRandomChoice = rand() % 2;
-
-        Time::initDeltaTime();
-
-        // thread in future???? if ur fucking smart enough, save me
-        this->update();
+        
+            Time::initDeltaTime();
+            m_paddleHitRandomChoice = rand() % 2;
 
 
-        this->render();
+            this->update();
+
+
+            this->render();
+
+            this->checkGameOver();
+
     }
     m_inputThread.join();
     m_ballCollisionsThread.join();

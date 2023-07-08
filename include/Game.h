@@ -60,7 +60,15 @@ class Game
         std::thread m_inputThread;
         std::thread m_ballCollisionsThread;
         
+        // Game state
+        bool m_gameOver;
+        bool m_playerWins;
+        bool m_botWins;
 
+
+        // GAME OVER SCREEN
+        sf::FloatRect m_winnerTextRect;
+        sf::Text m_winnertext;
         
     public:
         Game(Ball* ball, Paddle* paddle, BotPaddle* botPaddle);
@@ -77,6 +85,8 @@ class Game
         //Rendering
         void render();
         void renderText(sf::RenderTarget& target);
+
+        void checkGameOver();
         
 
         // Accessors
