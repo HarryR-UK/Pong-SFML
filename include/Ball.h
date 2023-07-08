@@ -1,5 +1,6 @@
 #ifndef BALL_H
 #define BALL_H
+#include "BotPaddle.h"
 #pragma once
 
 #include <iostream>
@@ -7,7 +8,7 @@
 #include <SFML/Window.hpp>
 #include<SFML/Graphics.hpp>
 
-#include "Paddle.h"
+#include "Time.h"
 
 class Ball
 {
@@ -23,7 +24,8 @@ class Ball
 
         sf::Vector2f startPos;
 
-        Paddle* m_paddle;
+        BotPaddle* m_botPaddle;
+
         sf::Text* p_player1Text;
         sf::Text* p_player2Text;
 
@@ -35,6 +37,8 @@ class Ball
         
     public:
         Ball(float startX, float startY);
+
+        void setBotPaddle(BotPaddle* botPaddle);
 
         sf::FloatRect getPosition();
         sf::RectangleShape getShape();
@@ -64,6 +68,7 @@ class Ball
         sf::Vector2f getShapePos();
 
         void resetBallPosition();
+        void resetBallSpeed();
         
 
         sf::FloatRect nextPos;

@@ -1,9 +1,37 @@
 #include "../include/BotPaddle.h"
 
+#define PADDLE_SPEED_TIMER 50.f
+
 void BotPaddle::initPaddleProperties()
 {
     m_paddleMoveSpeed = 5.5f;
     m_paddleDirectionY = 0.f;
+    m_botPaddleSpeedChangeTimer = PADDLE_SPEED_TIMER;
+}
+
+void BotPaddle::setPaddleSpeed(float newSpeed)
+{
+    m_paddleMoveSpeed = newSpeed;
+}
+
+float BotPaddle::getPaddleSpeed()
+{
+    return m_paddleMoveSpeed;
+}
+
+void BotPaddle::changePaddleSpeed()
+{
+    m_botPaddleSpeedChangeTimer -= Time::deltaTime;
+
+    if(m_botPaddleSpeedChangeTimer < 0)
+    {
+        int randSpeed = (rand() % 9) + 3;
+        m_paddleMoveSpeed = randSpeed;
+
+        m_botPaddleSpeedChangeTimer = PADDLE_SPEED_TIMER;
+
+    }
+
 }
 
 BotPaddle::BotPaddle(float startX, float startY)
@@ -40,6 +68,11 @@ void BotPaddle::checkPaddleCollisions(sf::VideoMode videoMode)
     }
 }
 
+void BotPaddle::resetSpeed()
+{
+    m_paddleMoveSpeed = 5.5f;
+}
+
 sf::FloatRect BotPaddle::getPosition()
 {
     return m_paddleShape.getGlobalBounds();
@@ -52,6 +85,7 @@ sf::RectangleShape BotPaddle::getShape()
 
 void BotPaddle::update(float deltaTime, float ballYVelocity, sf::Vector2f ballPosition)
 {
+    changePaddleSpeed();
     nextPos =m_paddleShape.getGlobalBounds();
     nextPos.top += m_paddleDirectionY * m_paddleMoveSpeed * deltaTime;
 

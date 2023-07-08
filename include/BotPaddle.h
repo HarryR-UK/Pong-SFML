@@ -3,6 +3,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "Time.h"
+
 
 class BotPaddle{
     private:
@@ -12,6 +14,8 @@ class BotPaddle{
 
         float m_paddleMoveSpeed;
         float m_paddleDirectionY;
+
+        float m_botPaddleSpeedChangeTimer;
 
         void initPaddleProperties();
 
@@ -24,6 +28,12 @@ class BotPaddle{
         void update(float deltaTime, float ballYVelocity, sf::Vector2f ballPosition);
         void render(sf::RenderTarget& target);
         void checkPaddleCollisions(sf::VideoMode videoMode);
+
+        void setPaddleSpeed(float newSpeed);
+        float getPaddleSpeed();
+
+        void changePaddleSpeed();
+        void resetSpeed();
 
         sf::FloatRect nextPos;
 

@@ -1,4 +1,5 @@
 #include "../include/Ball.h"
+#include <cstdlib>
 #include <sstream>
 
 void Ball::initBallProperties()
@@ -68,6 +69,11 @@ void Ball::scoreOnSides()
     m_position.x = startPos.x;
     m_position.y = startPos.y;
 
+    int newBallSpeed = (rand() % 4) + 1;
+
+    this->m_ballSpeed += newBallSpeed;
+    m_botPaddle->setPaddleSpeed(m_botPaddle->getPaddleSpeed() + newBallSpeed + 3);
+
     m_scoreTimer = 0.5f;
 }
 
@@ -79,6 +85,11 @@ void Ball::resetBallPosition()
 
     m_position.x = startPos.x;
     m_position.y = startPos.y;
+}
+
+void Ball::setBotPaddle(BotPaddle *botPaddle)
+{
+    m_botPaddle = botPaddle;
 }
 
 void Ball::pointToPlayer()
@@ -127,8 +138,8 @@ void Ball::update(float deltaTime)
 {
     
     nextPos = m_ballShape.getGlobalBounds();
-    nextPos.left += m_directionX;
-    nextPos.top += m_directionY;
+    nextPos.left += m_directionX * m_ballSpeed;
+    nextPos.top += m_directionY * m_ballSpeed;
 
     m_position.x += m_directionX * m_ballSpeed * deltaTime;
     m_position.y += m_directionY * m_ballSpeed * deltaTime;
@@ -148,6 +159,11 @@ void Ball::setPlayer1Pointer(sf::Text *player1Text)
 void Ball::setPlayer2Pointer(sf::Text *player2Text)
 {
     this->p_player2Text = player2Text;
+}
+
+void Ball::resetBallSpeed()
+{
+    this->m_ballSpeed = 7;
 }
 
 void Ball::checkBallCollisions(sf::VideoMode videoMode)

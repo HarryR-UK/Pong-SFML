@@ -34,6 +34,7 @@ void Game::initVariables()
     // assigning pointers
     m_pPlayer1Text = &m_player1Text;
     m_pPlayer2Text = &m_player2Text;
+    m_ball->setBotPaddle(m_botPaddle);
 
     m_window = nullptr;
 
@@ -228,6 +229,10 @@ void Game::restartGame()
     m_botWins = false;
 
     initText();
+    m_ball->resetBallSpeed();
+    m_ball->resetBallPosition();
+
+    m_botPaddle->resetSpeed();
 
 }
 
@@ -242,7 +247,6 @@ void Game::getInput()
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) && m_gameOver)
         {
             restartGame();
-            m_ball->resetBallPosition();
         }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
