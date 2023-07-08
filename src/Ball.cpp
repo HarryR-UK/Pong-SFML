@@ -4,7 +4,7 @@
 
 void Ball::initBallProperties()
 {
-    m_ballSpeed = 7.f;
+    m_ballSpeed = 10.f;
     m_directionY = 1.f;
     m_directionX = 1.f;
     m_scoreTimer = 0.5f;

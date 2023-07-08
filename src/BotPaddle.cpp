@@ -1,6 +1,6 @@
 #include "../include/BotPaddle.h"
 
-#define PADDLE_SPEED_TIMER 50.f
+#define PADDLE_SPEED_TIMER 30.f
 
 void BotPaddle::initPaddleProperties()
 {
@@ -25,7 +25,7 @@ void BotPaddle::changePaddleSpeed()
 
     if(m_botPaddleSpeedChangeTimer < 0)
     {
-        int randSpeed = (rand() % 9) + 3;
+        int randSpeed = (rand() % 9) + 4;
         m_paddleMoveSpeed = randSpeed;
 
         m_botPaddleSpeedChangeTimer = PADDLE_SPEED_TIMER;
