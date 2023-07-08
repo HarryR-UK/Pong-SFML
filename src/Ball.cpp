@@ -71,6 +71,16 @@ void Ball::scoreOnSides()
     m_scoreTimer = 0.5f;
 }
 
+void Ball::resetBallPosition()
+{
+
+    m_directionY = 1.f;
+    m_directionX = 1.f;
+
+    m_position.x = startPos.x;
+    m_position.y = startPos.y;
+}
+
 void Ball::pointToPlayer()
 {
     //change Text

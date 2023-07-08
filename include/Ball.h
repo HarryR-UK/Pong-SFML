@@ -62,6 +62,8 @@ class Ball
         void render(sf::RenderTarget &target);
 
         sf::Vector2f getShapePos();
+
+        void resetBallPosition();
         
 
         sf::FloatRect nextPos;

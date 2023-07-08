@@ -88,10 +88,12 @@ void Game::initText()
     m_winnertext.setCharacterSize(75);
     m_winnertext.setFillColor(sf::Color::White);
     
-    m_winnerTextRect = m_winnertext.getGlobalBounds();
     m_winnertext.setPosition(sf::Vector2f((m_videoMode.width / 2) - m_winnertext.getCharacterSize() * 2.5, (m_videoMode.height / 2) - m_winnertext.getCharacterSize()));
     
-
+    m_resetText.setFont(m_gameFont);
+    m_resetText.setFillColor(sf::Color::White);
+    m_resetText.setCharacterSize(30);
+    m_resetText.setPosition(sf::Vector2(sf::Vector2f((m_videoMode.width / 2) - m_resetText.getCharacterSize() * 5, (m_videoMode.height / 2) - (m_resetText.getCharacterSize() - 250))));
     
 }
 
@@ -135,7 +137,8 @@ void Game::update()
 
     }
     else {
-        
+
+        m_resetText.setString("PRESS R TO RESET GAME");
 
         if(m_playerWins)
         {
@@ -198,6 +201,7 @@ void Game::render()
     }
     else{
         m_window->draw(m_winnertext);
+        m_window->draw(m_resetText);
     }
     
     m_window->display();
@@ -217,6 +221,16 @@ void Game::checkGameOver()
     }
 }
 
+void Game::restartGame()
+{
+    m_gameOver = false;
+    m_playerWins = false;
+    m_botWins = false;
+
+    initText();
+
+}
+
 void Game::getInput()
 {
     while(isRunning())
@@ -225,12 +239,17 @@ void Game::getInput()
         {
             this->m_window->close();
         }
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::R) && m_gameOver)
+        {
+            restartGame();
+            m_ball->resetBallPosition();
+        }
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Up) || sf::Keyboard::isKeyPressed(sf::Keyboard::W))
         {
             m_paddle->moveUp();
         }
-        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        else if(sf::Keyboard::isKeyPressed(sf::Keyboard::Down) || sf::Keyboard::isKeyPressed(sf::Keyboard::S))
         {
             m_paddle->moveDown();
         }

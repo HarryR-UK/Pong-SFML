@@ -67,9 +67,9 @@ class Game
 
 
         // GAME OVER SCREEN
-        sf::FloatRect m_winnerTextRect;
         sf::Text m_winnertext;
-        
+        sf::Text m_resetText;
+        void restartGame();
     public:
         Game(Ball* ball, Paddle* paddle, BotPaddle* botPaddle);
         virtual ~Game();
